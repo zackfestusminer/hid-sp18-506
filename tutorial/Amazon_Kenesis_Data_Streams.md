@@ -32,8 +32,9 @@ A Kinesis stream is an ordered sequence of data records. To add data to a Kinesi
 
 Step2 – Click the create stream and fill the required fields such as stream name and number of shared and then click on create button.
  
+![AWS CreateKenesisStream](https://github.com/cloudmesh-community/hid-sp18-506/blob/master/tutorial/images/CreateKinesisStream.png?raw=true)
 
-
+![AWS DataStreamDetails](https://github.com/cloudmesh-community/hid-sp18-506/blob/master/tutorial/images/DataStreamDetails.png?raw=true)
  
 
 Step3 – Set up users on kinesis stream. Create new users and assign a policy to each user.
