@@ -86,7 +86,7 @@ There are four main components of NiFi to consume data for processing and produc
  
 \section NiFi Architecture
  
-\centering\includegraphics[width=\70]{images/NiFi.jpg}
+\centering\includegraphics[width=\columnwidth]{images/NiFi.jpg}
  
 FlowFile responsible to bring the data in to NiFi from any data sources. 
 Connections are link between NiFi components to move within the flow. 
@@ -129,8 +129,11 @@ workers based on load in the cluster.
 ZooKeer co-ordinates the storm cluster in the enterprise. Supervisor node, 
 interact with Nimbus through ZooKeeper to manage workers according direction from Nimbus.
 
-\section 
-\centering\includegraphics[width=\70]{images/Storm1.jpg}
+\section{ERROR ILLEGAL SECTION}
+
+\TODO{ERROR DOES NOT FOLLOW FIGURE TEMPLATE}
+
+\centering\includegraphics[width=\columnwidth]{images/Storm1.JPG}
 
   
 Five key abstractions help to understand how Storm processes data
@@ -168,10 +171,11 @@ Bluekai (Oracle) posts cookie data to this application through REST API continuo
 validation, and then perform actual processing in real time and then find the selected 
 audience based on cookie data and business rules and post back recommended audience to Bluekai
 
-\centering\includegraphics[width=\70]{images/realTimeAudienceSelection.jpg}
+\TODO{ERROR FIGURE DOES NOT FOLLW TEMPLATE}
+\centering\includegraphics[width=\columnwidth]{images/realTimeAudienceSelection.JPG}
 
  
-\section Conclusion}
+\section{Conclusion}
 Stream processing is required when data has to be processed continuously in a real time. There are several open source, 
 commercial frameworks and products available in the industry for real time stream processing. In this paper, an attempt is made 
 to describe Hortonworks streaming components, NiFi ingests, route and land real time data streaming. Kafka captures and perform instant 
