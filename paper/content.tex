@@ -1,5 +1,5 @@
-% status: 0
-% chapter: Data Streaming
+% status: 100
+% chapter: Streaming
 
 \title{Real Time Stream Processing - Big Data}
 
@@ -58,7 +58,6 @@ real time mode depending on organization requirements.
 But most of the organizations are looking for real time actionable analytics to make faster decision
  
 \section{Stream Overview}
- 
 ''The data needs to be processed sequentially and incrementally on a record-by-record basis or over sliding time windows, 
 and used for a wide variety of analytics including correlations, aggregations, filtering, and sampling. 
 Information derived from such analysis gives companies visibility into many aspects of their business and customer activity 
@@ -69,7 +68,7 @@ and respond in a timely fashion as the necessity arises''~\cite{hid-sp18-514-big
  
 Below are few of the frameworks and products developed in order to implement data streaming
  
-\section Apache NIFI
+\section{Apache NIFI}
  
 NIFI works with Apache Kafka, Apache Storm, Apache HBase and Spark for real-time distributed messaging of streaming data. 
 NiFi platform is used for ingesting real-time streaming data sources, such as the internet of things, 
@@ -84,8 +83,8 @@ There are four main components of NiFi to consume data for processing and produc
 \item And Flow Controller
 \end{itemize}
  
-\section NiFi Architecture
- 
+\section{NiFi Architecture}
+
 \centering\includegraphics[width=\columnwidth]{images/NiFi.jpg}
  
 FlowFile responsible to bring the data in to NiFi from any data sources. 
@@ -96,7 +95,7 @@ In the enterprise NiFi acts as a producer to publish messages to the topic.
 The messages are broadcasted over the network to the Apache Kafka Cluster.
  
  
-\section {Apache Kafka}
+\section{Apache Kafka}
 ''Kafka works in combination with Apache Storm, Apache HBase and Apache 
 Spark for real-time distributed messaging of streaming data. 
 Kafka is a low latency messaging platform for real-time streaming data sources, 
@@ -104,8 +103,7 @@ such as the internet of things, sensors,
 and transactional systems. Kafka brokers huge message streams for low-latency 
 analysis in Enterprise Apache Hadoop ecosystem''~\cite{hid-sp18-514-hwp}.
  
-\section Apache Storm
-
+\section{Apache Storm}
 Apache storm is a real time distributed computational system for processing huge volume of data in parallel 
 and with high scalability. Initially it was developed by twitter and it is composed of other open source components.
 Storm provides an interface for developers to develop applications that analyze streams of data (multiple rows). 
@@ -129,10 +127,6 @@ workers based on load in the cluster.
 ZooKeer co-ordinates the storm cluster in the enterprise. Supervisor node, 
 interact with Nimbus through ZooKeeper to manage workers according direction from Nimbus.
 
-\section{ERROR ILLEGAL SECTION}
-
-\TODO{ERROR DOES NOT FOLLOW FIGURE TEMPLATE}
-
 \centering\includegraphics[width=\columnwidth]{images/Storm1.JPG}
 
   
@@ -140,18 +134,18 @@ Five key abstractions help to understand how Storm processes data
 
 \begin{itemize}
 \item Tuples : An ordered list of elements.
-\item Streams : ''An unbounded sequence of tuples''~\cite{ hid-sp18-514-hwp}
-\item Spouts : ''Sources of streams in a computation (e.g. a Twitter API)'' ~\cite{ hid-sp18-514-hwp}
-\item Bolts : ''Process input streams and produce output streams. They can run functions, filter, aggregate, or join data, or talk to databases'' ~\cite{ hid-sp18-514-hwp}
-\item Topologies: ''The overall calculation, represented visually as a network of spouts and bolts''~\cite{ hid-sp18-514-hwp}
+\item Streams : ''An unbounded sequence of tuples''~\cite{hid-sp18-514-hwp}
+\item Spouts : ''Sources of streams in a computation (e.g. a Twitter API)''~\cite{hid-sp18-514-hwp}
+\item Bolts : ''Process input streams and produce output streams. They can run functions, filter, aggregate, or join data, or talk to databases''~\cite{hid-sp18-514-hwp}
+\item Topologies: ''The overall calculation, represented visually as a network of spouts and bolts''~\cite{hid-sp18-514-hwp}
 \end{itemize}
 
-\section {Apache Spark}
+\section{Apache Spark}
 Apache spark is a framework for large-scale data processing that supports several different
 programming languages and concepts such as Hadoop Map Reduce, distributed in-memory processing, 
 stream processing, and machine learning. This can be used on top the Hadoop framework
 
-\section {Other Stream Processing Frameworks and Products}
+\section{Other Stream Processing Frameworks and Products}
 
 \begin{itemize}
 \item Apache Samza
@@ -162,16 +156,15 @@ stream processing, and machine learning. This can be used on top the Hadoop fram
 \end{itemize}
 
 
-\section {User Case}
+\section{User Case}
 Real time audience selection based on browse pattern in the web (credit card recommendation)
 
-\section {High Level Architecture}
+\section{High Level Architecture}
 Data ingestion happens from various sources in real time. Real time audience selection application hosted on Big Data platform.
 Bluekai (Oracle) posts cookie data to this application through REST API continuously. This application performs pre-processing, 
 validation, and then perform actual processing in real time and then find the selected 
 audience based on cookie data and business rules and post back recommended audience to Bluekai
 
-\TODO{ERROR FIGURE DOES NOT FOLLW TEMPLATE}
 \centering\includegraphics[width=\columnwidth]{images/realTimeAudienceSelection.JPG}
 
  
