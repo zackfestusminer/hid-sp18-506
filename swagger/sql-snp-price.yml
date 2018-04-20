@@ -1,0 +1,129 @@
+swagger: "2.0"
+info: 
+  version: "1.0.0"
+  title: "SNP 500 Pricing Data System"
+  description: "An API that interacts with a SQL database to manage and fetch SNP 500 Price Data."
+  contact: 
+    name: "Ravinder L"
+host: "localhost:8080"
+basePath: "/cloudmesh"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces: 
+  - "application/json"
+paths: 
+  /snp: 
+    get: 
+      description: "Returns all SNP Prices from the system."
+      operationId: "getSnp"
+      responses: 
+        200:
+          description: "A list of all prices."
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Snp"
+        400:
+          $ref: '#/responses/400Error'
+    put:
+      description: "User can insert a new price details record."
+      operationId: "createSnp"
+      parameters:
+        - name: snp
+          in: body
+          description: "Creates a new price record."
+          schema:
+            $ref: '#/definitions/Snp'
+      responses:
+        200:
+          description: Successfully created a new pricing
+        400:
+          $ref: '#/responses/400Error'
+
+  /snp/{snpDate}:
+    get:
+      description: "Returns SNP Price details based on date"
+      operationId: "getSnpByDate"
+      parameters: 
+        - name: "snpDate"
+          in: "path"
+          description: "SNP price details to return"
+          required: true
+          type: "string"        
+      responses :
+        200:
+          description: "SNP Pricisng details by date."
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Snp"
+        400:
+          $ref: '#/responses/400Error'
+    patch:
+      description: "Update a SNP pricing details based on date provided"
+      operationId: "updateSnpByDate"
+      parameters: 
+        - name: "snpDate"
+          in: "path"
+          description: "Update SNP Price data"
+          required: true
+          type: "string"
+        - name: snp
+          in: body
+          description: "Pricing Data for update"
+          schema:
+            $ref: '#/definitions/Snp'
+      responses:
+        200:
+          description: "Returns the updated pricing data."
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Snp"
+        400:
+          $ref: '#/responses/400Error'
+    delete: 
+      description: "Delete SNP Pricing data by date."
+      operationId: "deleteSnpByDate"
+      parameters: 
+        - name: "snpDate"
+          in: "path"
+          description: "Delete SNP pricing data by date"
+          required: true
+          type: "string"
+      responses: 
+        204:
+          description: "Pricing Data deleted"
+        400:
+          $ref: '#/responses/400Error'
+definitions: 
+  Snp: 
+    type: "object"
+    required: 
+      - "snpDate"
+    properties: 
+      snpDate: 
+        type: "string"
+      open: 
+        type: "number"
+      high: 
+        type: "number"
+      close:
+        type: "number"
+      low:
+        type: "number"
+      adjClose:
+        type: "number"
+      volume:
+       type: "integer"
+responses:
+  400Error:
+    description: Invalid request
+    schema:
+      type: object 
+      properties:
+        message:
+          type: string
+        
