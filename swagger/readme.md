@@ -3,7 +3,7 @@
 - Orly Eseban, hid-sp18-506
 # Swagger REST API - Manage S&P 500 Pricing Data in the Database
 
-This API provides operations like get all S&P pricing data, filter data by date, delete data by date, update data by date, and insert pricing details in he database using HTTP methods such as GET, PUT, PATCH and DELETE.
+This API provides operations like get all S&P pricing data, filter data by date, delete data by date, update data by date, and insert pricing details in the database using HTTP methods such as GET, PUT, PATCH and DELETE.
 
 ### Prerequiste
 
@@ -32,7 +32,11 @@ This API provides operations like get all S&P pricing data, filter data by date,
     git clone https://github.com/cloudmesh-community/hid-sp18-514.git
     cd hid-sp18-514/swagger
     ```
-3. Additional steps can then be performed by excuting the Makefile using the usage parameters below:
+3. Update the DB properties - user, password, dbname, and db hostname
+	```sh
+    config.py
+    ```
+4. Additional steps can then be performed by excuting the Makefile using the usage parameters below:
     -  Installing the sevice and dependencies
         ```sh
         make service

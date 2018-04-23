@@ -37,8 +37,8 @@ WORKDIR hid-sp18-514/swagger
 
 RUN wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar -O swagger-codegen-cli.jar
 RUN java -jar swagger-codegen-cli.jar generate -i sql-snp-price.yml -l python-flask -o snp -D supportPython3=true
-RUN cp snpPriceFunctions.py snp/swagger_server/controllers
-RUN cp config.py snp/swagger_server/controllers
+RUN cp snpPriceFunctions.py snp/
+RUN cp config.py snp/
 RUN cp default_controller.py snp/swagger_server/controllers
 RUN cd snp && pip install -r requirements.txt && python setup.py install
 
