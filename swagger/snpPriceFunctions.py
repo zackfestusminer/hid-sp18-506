@@ -38,7 +38,7 @@ def snp_delete(snpDate):
 def snp_update(snpDate, snpUpdate):
     sql = "UPDATE SNP_PRICE_DETAILS SET Open = %s, High = %s, Low = %s, Close = %s, AdjClose=%s, Volume=%s WHERE Date = %s"
     resultSet = cursor.execute(sql, (snpUpdate['open'], snpUpdate['high'], snpUpdate
-                        ['low'], snpUpdate['close'], snpUpdate['adjClose'], snpUpdate['Volume'], snpDate))
+                        ['low'], snpUpdate['close'], snpUpdate['adjClose'], snpUpdate['volume'], snpDate))
     connection.commit()
     return resultSet
 
