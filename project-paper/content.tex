@@ -310,8 +310,9 @@ and columns name was:Price.
   \caption{Benfords Law Verification for - NSN DS}\label{f:NSN-ds-benfordlaw}
 \end{figure}
 
-The line is Benford’s Law probabilities and the bars are 
-the actual occurrences.
+The line is Benford’s Law prediction and the bars are 
+the actual data. This dataset follows the benford's law
+because most of the bars are within the benford's law prediction.
 
 
 \subsection{Credit card transactions Dataset}
@@ -327,9 +328,9 @@ output for the dataset~\cite{hid-sp18-514-purchase-card-ds}
   \caption{Fraud Detection Using Benford Law}\label{f:card-ds-benfordlaw}
 \end{figure}
 
-The line is Benford’s Law probabilities and the bars are 
-the actual occurrences. Few bars are above the line hence,
-there is an indication of probable fraud in the transactions.
+The line is Benford’s Law prediction and the bars are 
+the actual data. This dataset does not follow the benford's law
+because most of the bars are outside the benford's law prediction.
 
 
 \section{Further Analysis Needed}
@@ -357,6 +358,11 @@ this is sensitive to sample sizes and outliers.
 
 The level of significance for chi-square test 
 but a widely acceptable confidence level is 95 percentage
+
+\section{DataSet - Accuracy For Benford's Law Prediction}
+Authors verified three datasets in this paper. Only one
+date set - National Stock Number extract 
+complied the Benford's Law.
 
 \section{Conclusion}
 This paper has shown the Benford’s Law is observed in 
