@@ -1,7 +1,7 @@
 % status: 100
-% chapter: REST
+% chapter: BigData - Benford's Law Verification
 
-\title{Universal Cloud REST Service Framework to Determine the Validity Of Benford’s Law Using Datasets In Data.gov}
+\title{BigData With Benfords Law}
 
 \author{Ravinder Lambadi}
 \affiliation{%
@@ -25,22 +25,28 @@
 \email{esteban@iu.edu}
 
 \begin{abstract}
-It is observed that a lot of real-life data, from personal 
-expenses to world population data, tend to obey Benford’s Law. 
-Because of this phenomenon, Benford’s Law has been leveraged 
-in a lot of statistical analysis – including fraud detection. 
-In 2009,  Benford’s Law has been utilized to detect election 
-fraud in Iran. In this paper, the authors will determine the 
-universality of the law. Is the law applicable to any dataset? 
-The authors will analyze and visualize data on publicly 
-available data sets at data.gov and determine which 
-datasets follow this law and which ones do not, if any.
+Analyzing large amount of data detecting for anomalies 
+can be a painful endeavor. Not only would you need a 
+reliable algorithm to analyze data but also an 
+infrastructure to support an ever growing data to 
+analyze. This paper attempts to address these concerns. 
 
-In this paper, the authors created web services deployed 
-on the cloud that take large datasets, analyze them and 
-return a graph that shows the leading digits distribution 
-of the selected field in the dataset compared side by side 
-with Benford’s Law predicted distribution.
+It is observed that a lot of real-life data, 
+from personal expenses to world population data, 
+tend to obey Benford’s Law. Because of this phenomenon, 
+Benford’s Law has been leveraged 
+in a lot of statistical analysis – including fraud 
+detection. In 2009,  Benford’s Law has been utilized 
+to detect election fraud in Iran.
+
+In this paper, the authors first determined 
+the universality of the law and drew criteria 
+where the the law is applicable by citing 
+observations made from other source and more 
+importantly the authors’ own observations by 
+using data from data.gov. The authors then 
+created a web service using the law and deployed 
+the service to the cloud.
 
 \end{abstract}
 
@@ -88,12 +94,12 @@ digits have the following the probability distribution:
 In mathematical terms, Benford’s Law can be represented 
 by the following equation:
 
-P (d) = log (d+1) - log (d)
+\[P (d) = \log (d+1) - \log (d)\]
 
 Example: In case base 10 is used we obtain the 
 probability for the leading digit 1, as
 
-P (1) = log (1+1) - log (1) = 0.301
+\[P (1) = \log (1+1) - \log (1) = 0.301 \]
 
 which means, if the dataset complies 
 with Benford's Law, the probability of finding a 
@@ -129,20 +135,118 @@ predicted by Benford’s Law~\cite{hid-sp18-514-benfordwiki}
   \caption{First Digit Population Distribution}\label{f:pop-dist-countries}
 \end{figure}
 
+The logarithmic function can be in any base. 
+We have developed a REST service that allows
+the calculation of Benford's Law. 
+The service will allow us to specify 
+the base and the data set as input. 
+
+\section{Objectives}
+The popularity and the size of data being 
+analyzed using Benford’s Law have lead the authors 
+to conduct this study. 
+There are 2 objectives that the authors aim to achieve:
+
+\begin{enumerate}
+\item
+Write a performant web service that takes in numerical datasets. 
+The web service should be performant enough to handle large datasets. 
+It should take in a URL of the dataset (for this exercise the authors used
+large datasets from data.gov). Analyze the data and return a visualization 
+of the data side by side with the BL’s predicted distribution.
+\item
+Deploy the web service to an infrastructure that should be able to handle 
+the huge amount of load both in terms of numbers of sessions and the size 
+of the data. To ensure that the web service can handle the load, 
+the authors deployed the web service in the cloud that use latest 
+technology to keep up with the expected load.
+\end{enumerate}
+
+\section{Limitations of Benford’s Law}
+It is important to note that Benford’s Law assumes that the 
+dataset in question is generated randomly. A naturally occurring 
+dataset where the numbers generated are intentionally restricted 
+is not a fit for Benford’s Law analysis. 
+
+Also when certain rules are applied to generate 
+the numbers in the dataset, Benford’s Law may not be applicable.
+For example, the social security number is generated with a 
+certain formula that applies only to a certain state 
+and therefore its leading digit may not be truly random. 
+
+Because of this limitations, before Benford’s Law is
+used in controversial investigations, the auditor must 
+first determine if the numbers are truly randomly generated, 
+of large orders of magnitude and its size is big enough 
+to draw reliable conclusions.
+
+The adequate sample size for BL is not exactly 
+determined. However,this source 
+(Kenny, D.A. 2015. Measuring model fit, 
+available from~\cite{hid-sp18-514-Kenny-Measuring-model}
+[Accessed January 2017].)  
+claims that the consensus is at least 50-100 minimum data 
+points for BL to be perceived. The authors are not 
+comfortable with this limit but would recommend at least 
+a thousand data points. The general rule is that more 
+data points the more reliable the results would be.
+
 \section{REST Services To Determive Benfords's Law}
 
 There are four universal services have been built to determine
-whether the provided data set follows Befords's law.
+whether the provided data set follows Benford’sfords's law.
 
 \begin{enumerate}
+ \item computeBenfordLawWebDataSetService
  \item downloadDataSet
  \item computeBenfordLawCSVDataSet
  \item computeBenfordLawExcelDataSet
- \item computeBenfordLawWebDataSetService
 \end{enumerate}
 
+\subsection{computeBenfordLawWebDataSetService - REST API}
+computeBenfordLawWebDataSetService is 
+a REST API to defect fraud using Benford's Law.
+We have taken dataset from~\cite{hid-sp18-514-aust-cc-benford}
+to verify benford law.
 
-\subsection{downloadDataSet}
+This dataset has 690 credit card customers.
+There are chances that few fraudulent customer 
+applications got approved due to errors. 
+This service will find some possible frauds using 
+Benford's law so that the bank can perform
+further investigation.
+
+There are no column names defined in the original dataset.
+so the authors defined the column names as:
+A1 to A15. Using Pandas library this dataset
+is imported and created the dataframe.
+
+Last column A15 is a numerical field 
+indicates whether credit card is approved. 
+1 indicates approved and 0 indicates didn't 
+get approved.
+
+To test the service, pass the below query
+parameter-column:A2 to the API.
+
+
+After analysis of the figure generated 
+by the service, noticed that the bars 
+for digits 3,4,5,6,7 are not within 
+Benford's law prediction. 
+All of them are above Benford's law 
+line which means that this bar deviated 
+from Benford's law. 
+Therefore, this should trigger an investigation 
+to confirm wheter or not the customers committed fraud. 
+
+\begin{figure}[!ht]
+\centering\includegraphics[width=\columnwidth]{images/fraudDet_cc_data.JPG}
+  \caption{Credit Card Application Dataset}\label{f:aust-cc-data}
+\end{figure}
+
+
+\subsection{downloadDataSet - REST API}
 downloadDataSet is a REST API service tested on 
 on-premise and cloud environment. This service requires two 
 input paramaters to download the dataset.
@@ -157,10 +261,10 @@ Below parameters need to pass to this REST API:
 \end{enumerate}
 
 
-\subsection{computeBenfordLawExcelDataSet}
+\subsection{computeBenfordLawExcelDataSet - REST API}
 computeBenfordLawExcelDataSet is a REST API service tested on 
 on-premise and cloud environment. This service requires two 
-input paramaters to determine Befords's Law. This service
+input paramaters to determine Benfords's Law. This service
 process and send back the output 
 for all excel based datasets.
 
@@ -174,12 +278,12 @@ Below parameters need to pass to this REST API:
  as, Ex: nsn-extract.xlsx
 \end{enumerate}
 
-\subsection{computeBenfordLawCSVDataSet}
+\subsection{computeBenfordLawCSVDataSet - REST API}
 computeBenfordLawCSVDataSet is a REST API service 
-tested on on premise and cloud environment. 
+tested on on-premise and cloud environment. 
 This service requires two input paramaters to 
-determine Befords's Law. This service
-process and send back the output 
+determine Benfords's Law. This service
+process and sends back the output 
 for all CSV and Text based datasets.
 
 Below parameters need to pass to this REST API:
@@ -193,17 +297,11 @@ Below parameters need to pass to this REST API:
 \end{enumerate}
 
 \subsection{Benfords Law Verification for National Stock 
-Number Extract Datset - Excel}
-National Stock Number extract includes the current 
-listing of National Stock Numbers, 
-NSN item name and descriptions, and current 
-selling price of each product listed in GSA 
-Advantage and managed by GSA. Each NSN is 
-listed with the vendors description of the item. 
-Some descriptions exceed the standard length and are 
-truncated~\cite{hid-sp18-514-nsn-ds-desc}.
+Number Datset - Excel}
+National Stock Number extract dataset downloaded from 
+~\cite{hid-sp18-514-nsn-ds-desc} to verify benfords law.
 
-BenfordLawExcelDataSetService returned the below
+BenfordLawExcelDataSetService returns the below
 output for the dataset~\cite{hid-sp18-514-excelDatalocation}
 and columns name was:Price.
 
@@ -216,14 +314,12 @@ The line is Benford’s Law probabilities and the bars are
 the actual occurrences.
 
 
-\subsection{Fraud Detection - Credit card transactions Dataset}
-This dataset contains information on purchases made through 
-the purchase card programs administered by the state and higher 
-ed institutions. The purchase card information will be updated monthly 
-after the end of the month. For example, July information will 
-be added in August~\cite{hid-sp18-514-purchase-card-desc}
+\subsection{Credit card transactions Dataset}
+This dataset contains card transactions downloaded 
+from~\cite{hid-sp18-514-purchase-card-desc}
+for Benford's Law verification.
 
-BenfordLawCSVDataSetService returned the below
+BenfordLawCSVDataSetService returns the below
 output for the dataset~\cite{hid-sp18-514-purchase-card-ds}
 
 \begin{figure}[!ht]
@@ -232,29 +328,70 @@ output for the dataset~\cite{hid-sp18-514-purchase-card-ds}
 \end{figure}
 
 The line is Benford’s Law probabilities and the bars are 
-the actual occurrences.
+the actual occurrences. Few bars are above the line hence,
+there is an indication of probable fraud in the transactions.
 
+
+\section{Further Analysis Needed}
+The results drawn from these examples should 
+be analyzed with great caution. They should 
+never be used as an absolute proof of presence 
+or absence of manipulation. A clever fraud who 
+is familiar with the law can still manipulate 
+the data that remain undetectable with the 
+application of Benford’s Law.
+
+However, we should not easily dismiss the results 
+when comparing the data with Benford’s Law. 
+A good fitness test must be conducted to determine 
+how the data conforms with Benford’s Law.
+For the goodness of fit test, the following can be implemented:
+
+\begin{enumerate}
+\item A visual graph of the actual data distribution 
+layed on top of the expected Benfords Law distribution
+\item Root mean square error fit index.
+\item Chi-square goodness of fit test. Although, 
+this is sensitive to sample sizes and outliers.
+\end{enumerate}
+
+The level of significance for chi-square test 
+but a widely acceptable confidence level is 95 percentage
 
 \section{Conclusion}
-Benford’s Law can recognize the probabilities of highly  likely or 
-highly unlikely frequencies of numbers in a data set.The 
-probabilities are based on mathematical logarithms of the occurrence 
-of digits from the given data sets for Benford's validity. We have 
-verified Benford law for stock price dataset and fraud detection on 
-card transactions.The limitation with Benford Law is, it performs 
+This paper has shown the Benford’s Law is observed in 
+the the real life data in data.gov and in many other 
+cited studies. Given that Benford’s Law is gaining prominence 
+and as data sizes explode, there is a need for effective scanning
+of the data to identify conformity the with Benford’s Law. 
+The authors have successfully set up this mechanism to 
+keep up with the expected load.
+
+
+Benford’s Law can recognize the probabilities of highly  
+likely or highly unlikely frequencies of numbers in a data set.
+The probabilities are based on mathematical logarithms of the 
+occurrence of digits from the given data sets for Benford's 
+validity. We have verified Benford law for stock price 
+dataset and fraud detection on card transactions.
+The limitation with Benford Law is, it performs 
 Benford Law analysis on Numeric data type column only. 
-And for accurate analysis it requires large dataset.
+And for accurate analysis it requires large dataset. 
 For smaller dataset the analysis might not accurate.
 
-As seen in the results above, the Law tends to apply the most 
-to data that are uniformly distributed across several orders of magnitude. 
-It may not apply if the range of values are very tight. 
-The credit card transaction above is way off Benford’s 
-Law prediction. This should prompt further investigation 
-since credit card transactions are usually in orders of several 
-magnitude. It’s either the transaction are purposely fraudulent 
-or unintentionally filled with bad data or it is one 
-of the few exceptions where Benford’s Law does not apply.
+As seen in the results above, the Law tends to 
+apply the most to data that are uniformly 
+distributed across several orders of magnitude. 
+It may not apply if the range of values are 
+very tight. The credit card transaction above 
+is way off Benford’s Law prediction. 
+This should prompt further investigation 
+since credit card transactions are usually 
+in orders of several magnitude. 
+It’s either the transaction are purposely 
+fraudulent or unintentionally filled 
+with bad data or it is one of 
+the few exceptions where Benford’s Law does not apply.
 
 
 \bibliographystyle{ACM-Reference-Format}
